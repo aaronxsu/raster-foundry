@@ -63,6 +63,11 @@ M61
 M62
 M63
 M64
+<<<<<<< HEAD
 M65
 M66
+||||||| merged common ancestors
+=======
+M65
+>>>>>>> Expand `Exports.getExportDefinition`
 }
