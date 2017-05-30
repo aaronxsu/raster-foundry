@@ -1,0 +1,58 @@
+{
+    "layers": [
+        {
+            "output": {
+                "crs": "epsg:3857",
+                "cell_size": {
+                    "width": 0.05716999992728233,
+                    "height": 0.05716999992728233
+                },
+                "pyramid": true,
+                "cellType": "uint16raw",
+                "tileSize": 256,
+                "resampleMethod": "NearestNeighbor",
+                "histogramBuckets": 512,
+                "uri": "s3://rasterfoundry-staging-catalogs-us-east-1/layers",
+                "keyIndexMethod": "ZCurveKeyIndexMethod",
+                "native": false
+            },
+            "id": "fa4c3781-81f0-4535-ad85-526bfeecea10",
+            "sources": [
+                {
+                    "crs": null,
+                    "bandMaps": [
+                        {
+                            "source": 4,
+                            "target": 4
+                        },
+                        {
+                            "source": 3,
+                            "target": 3
+                        },
+                        {
+                            "source": 2,
+                            "target": 2
+                        },
+                        {
+                            "source": 1,
+                            "target": 1
+                        }
+                    ],
+                    "uri": "s3://rasterfoundry-staging-data-us-east-1/user-uploads/google-oauth2%7C104543305954860658592/a0c50ccf-df12-49f5-b610-3fa3c0efad12/cb-test-three-ebee-may-2015.tif",
+                    "cellSize": {
+                        "width": 0.05716999992728233,
+                        "height": 0.05716999992728233
+                    },
+                    "extent": [
+                        -72.74271734669615,
+                        44.27503317570743,
+                        -72.73948082370633,
+                        44.277490511479485
+                    ],
+                    "extentCrs": "epsg:4326"
+                }
+            ]
+        }
+    ],
+    "id": "fa4c3781-81f0-4535-ad85-526bfeecea10"
+}
