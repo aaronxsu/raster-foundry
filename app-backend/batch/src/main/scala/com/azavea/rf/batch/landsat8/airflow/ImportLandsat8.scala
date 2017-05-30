@@ -231,13 +231,22 @@ case class ImportLandsat8(startDate: LocalDate = LocalDate.now(ZoneOffset.UTC), 
           Future.sequence(scenes.map { scene =>
             val id = scene.id.map(_.toString).getOrElse("")
             logger.info(s"Importing scene $id...")
+
             val future =
-              Scenes.insertScene(scene, user).map(_.toScene).recover {
-                case e: PSQLException => {
-                  logger.error(s"An error occurred during scene $id import. Skipping...")
-                  logger.error(e.stackTraceString)
-                  sendError(e)
-                  scene.toScene(user)
+              Scenes.sceneNameExistsForUser(scene.name, user).flatMap { count =>
+                if (count > 0) {
+                  logger.warn(s"Skipping $id because an automatically imported scene with the " +
+                    s"name ${scene.name} already exists")
+                  Future.apply(scene.toScene(user))
+                } else {
+                  Scenes.insertScene(scene, user).map(_.toScene).recover {
+                    case e: PSQLException => {
+                      logger.error(s"An error occurred during scene $id import. Skipping...")
+                      logger.error(e.stackTraceString)
+                      sendError(e)
+                      scene.toScene(user)
+                    }
+                  }
                 }
               }
 

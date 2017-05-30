@@ -179,12 +179,20 @@ case class ImportSentinel2(startDate: LocalDate = LocalDate.now(ZoneOffset.UTC))
 
                   logger.info(s"Importing scene $sceneId...")
                   val future =
-                    Scenes.insertScene(scene, user).map(_.toScene).recover {
-                      case e: PSQLException => {
-                        logger.error(s"An error occurred during scene $sceneId import. Skipping...")
-                        logger.error(e.stackTraceString)
-                        sendError(e)
-                        scene.toScene(user)
+                    Scenes.sceneNameExistsForUser(scene.name, user).flatMap{ count =>
+                      if (count > 0) {
+                        logger.warn(s"Skipping $sceneId because an automatically imported scene with the " +
+                                      s"name ${scene.name} already exists")
+                        Future.apply(scene.toScene(user))
+                      } else {
+                        Scenes.insertScene(scene, user).map(_.toScene).recover {
+                          case e: PSQLException => {
+                            logger.error(s"An error occurred during scene $sceneId import. Skipping...")
+                            logger.error(e.stackTraceString)
+                            sendError(e)
+                            scene.toScene(user)
+                          }
+                        }
                       }
                     }
 
