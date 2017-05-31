@@ -1,19 +1,19 @@
 package com.azavea.rf.batch.export.spark
 
-import java.util.UUID
-
-import cats.data.Validated._
-import cats.implicits._
 import com.azavea.rf.batch._
 import com.azavea.rf.batch.ast._
 import com.azavea.rf.batch.dropbox._
 import com.azavea.rf.batch.export._
 import com.azavea.rf.batch.util._
 import com.azavea.rf.batch.util.conf._
-import com.azavea.rf.common.InterpreterException
+import com.azavea.rf.common.ast.InterpreterException
 import com.azavea.rf.datamodel._
 import com.azavea.rf.tool.ast.MapAlgebraAST
 import com.azavea.rf.tool.params.EvalParams
+
+import _root_.io.circe.parser._
+import cats.data.Validated._
+import cats.implicits._
 import com.dropbox.core.v2.DbxClientV2
 import com.dropbox.core.v2.files.{CreateFolderErrorException, WriteMode}
 import com.typesafe.scalalogging.LazyLogging
@@ -29,11 +29,13 @@ import geotrellis.spark.io.hadoop._
 import geotrellis.spark.io.s3._
 import geotrellis.spark.tiling._
 import geotrellis.vector.MultiPolygon
-import _root_.io.circe.parser._
 import org.apache.hadoop.fs.Path
 import org.apache.spark._
 import org.apache.spark.rdd.RDD
+
 import spray.json.DefaultJsonProtocol._
+import java.util.UUID
+
 
 // --- //
 

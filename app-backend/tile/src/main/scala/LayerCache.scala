@@ -136,6 +136,7 @@ object LayerCache extends Config with LazyLogging {
       }
     }
 
+
   /** Calculate the histogram for the least resolute zoom level to automatically render tiles */
   def modelLayerGlobalHistogram(
     ast: MapAlgebraAST,
@@ -162,6 +163,7 @@ object LayerCache extends Config with LazyLogging {
         hist
       }
     }
+
 
   /** Calculate all of the prerequisites to evaluation of an AST over a set of tile sources */
   def toolEvalRequirements(
