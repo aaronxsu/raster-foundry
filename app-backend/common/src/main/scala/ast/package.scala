@@ -77,6 +77,7 @@ package object ast {
       ast     <- substituteBranches(oldAst, user, subs)
       params  <- OptionT.pure[Future, EvalParams](toolRun.executionParameters.as[EvalParams].valueOr(throw _))
     } yield {
+      val ast = prepareAst(t, tr, user)
       Interpreter.interpretPure[M](ast, params.sources)
     }
 
@@ -86,6 +87,8 @@ package object ast {
       case None => throw InterpreterException(NonEmptyList.of(DatabaseError(toolRunId)))
     })
   }
+
+  def prepareAST(t: Tool.WithRelated, tr: ToolRun, user: User): Interpreter.Interpreted[MapAlgebraAST] = ???
 
   def validateASTPure[M: Monoid](ast: MapAlgebraAST, params: EvalParams): Interpreter.Interpreted[M] = {
 
