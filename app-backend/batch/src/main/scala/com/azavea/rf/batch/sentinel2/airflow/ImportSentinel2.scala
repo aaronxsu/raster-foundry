@@ -83,6 +83,8 @@ case class ImportSentinel2(startDate: LocalDate = LocalDate.now(ZoneOffset.UTC))
     val keyPath: String = s"$tilePath/preview.jpg"
     val thumbnailUrl = s"${sentinel2Config.baseHttpPath}/$keyPath"
 
+    println(s"isUriExists($thumbnailUrl): ${isUriExists(thumbnailUrl)}")
+
     if (!isUriExists(thumbnailUrl)) Nil
     else
       Thumbnail.Identified(
@@ -123,6 +125,8 @@ case class ImportSentinel2(startDate: LocalDate = LocalDate.now(ZoneOffset.UTC))
                         .getObjectContent
                         .toJson
                         .getOrElse(Json.Null)
+
+                  println(s"${tilePath}/tileInfo.json: ${tileinfo}")
 
                   val images = List(10f, 20f, 60f).map(createImages(sceneId, tileinfo, _)).reduce(_ ++ _)
 
