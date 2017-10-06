@@ -50,7 +50,7 @@
 <div class="list-group-item" ng-if="!$ctrl.annotation.geometry || ($ctrl.editId === $ctrl.annotation.properties.id)">
   <div class='annotation-new'>
     <form>
-    <angucomplete-alt pause="100"
+    <!-- <angucomplete-alt pause="100"
                       initial-value="$ctrl.annotation.properties.label"
                       selected-object="$ctrl.labelObj"
                       placeholder="{{$ctrl.annotation.properties.label || 'Label name...'}}"
@@ -62,7 +62,24 @@
                       match-class="annotation-highlight"
                       override-suggestions="true"
                       ng-class="{'is-invalid': $ctrl.isInvalid }">
-    </angucomplete-alt>
+    </angucomplete-alt> -->
+    <div class="node-select">
+      <input
+        type="text"
+        class="node-filter"
+        ng-model="$ctrl."
+        ng-click=""
+      >
+      <div class="node-selections">
+        <div class="node-option"
+             ng-class="{'selected': node.id === $ctrl.selected}"
+             ng-click=""
+             ng-attr-title=""
+             ng-repeat="">
+          {{node.label}}
+        </div>
+      </div>
+    </div>
     <textarea class="form-control"
               ng-init="$ctrl.newLabelDescription = $ctrl.annotation.properties.description"
               ng-model="$ctrl.newLabelDescription"
